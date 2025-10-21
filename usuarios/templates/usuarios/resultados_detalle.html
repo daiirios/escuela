@@ -1,0 +1,49 @@
+<h2>Resultados - {{ jardin.nombre }}</h2>
+
+<a href="{% url 'resultados_nuevo' jardin.id %}">➕ Agregar estudiante</a>
+
+<table border="1" cellspacing="0" cellpadding="8">
+    <tr style="background-color:#007BFF; color:white;">
+        <th>Sala</th>
+        <th>Turno</th>
+        <th>Docente</th>
+        <th>Nombre</th>
+        <th>DNI</th>
+        <th>Obra Social</th>
+        <th>Control Oftam.</th>
+        <th>AV OD Lejos</th>
+        <th>AV OI Lejos</th>
+        <th>AV Cerca OA</th>
+        <th>Motilidad C-D-A</th>
+        <th>Observaciones</th>
+        <th>Año</th>
+        <th>Acciones</th>
+        
+    </tr>
+    {% for estudiante in estudiantes %}
+    <tr>
+        <td>{{ estudiante.sala }}</td>
+        <td>{{ estudiante.turno }}</td>
+        <td>{{ estudiante.docente }}</td>
+        <td>{{ estudiante.nombre }}</td>
+        <td>{{ estudiante.dni }}</td>
+        <td>{{ estudiante.obra_social }}</td>
+        <td>{{ estudiante.control_oftam }}</td>
+        <td>{{ estudiante.av_od_lejos }}</td>
+        <td>{{ estudiante.av_oi_lejos }}</td>
+        <td>{{ estudiante.av_cerca_oa }}</td>
+        <td>{{ estudiante.motilidad_cda }}</td>
+        <td>{{ estudiante.observaciones }}</td>
+        <td>{{ estudiante.anio }}</td>
+        <td>
+            <form action="{% url 'eliminar_estudiante' estudiante.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">❌ Eliminar</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+<a href="{% url 'resultados' %}">Volver</a>

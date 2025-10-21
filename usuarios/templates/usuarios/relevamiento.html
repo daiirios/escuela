@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Relevamiento - {{ jardin.nombre }}</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background-color: #f4f4f4; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #333; padding: 8px; text-align: center; }
+        th { background-color: #007BFF; color: white; }
+        .btn {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 8px 12px;
+            background: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .btn:hover { background: #0056b3; }
+        button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover { background: #a71d2a; }
+    </style>
+</head>
+<body>
+    <h2>Relevamiento - {{ jardin.nombre }}</h2>
+
+
+    <!-- Tabla con relevamientos -->
+    <table>
+        <thead>
+            <tr>
+                <th>Sala/Grado/Sección</th>
+                <th>Docente</th>
+                <th>Cant. Estudiantes</th>
+                <th>Ya evaluados</th>
+                <th>Autorizados</th>
+                <th>Ausentes</th>
+                <th>No colaboró</th>
+                <th>Grado I</th>
+                <th>Grado II</th>
+                <th>Grado III</th>
+                <th>Control oftamológico previo</th>
+                <th>Observaciones</th>
+                <th>Año</th>
+                <th>Acciones</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in relevamientos %}
+            <tr>
+                <td>{{ r.sala_grado_seccion }}</td>
+                <td>{{ r.docente }}</td>
+                <td>{{ r.cantidad_estudiantes }}</td>
+                <td>{{ r.ya_evaluados }}</td>
+                <td>{{ r.autorizados }}</td>
+                <td>{{ r.ausentes }}</td>
+                <td>{{ r.no_colaboro }}</td>
+                <td>{{ r.grado_i }}</td>
+                <td>{{ r.grado_ii }}</td>
+                <td>{{ r.grado_iii }}</td>
+                <td>{{ r.control_oftamologico_previo|yesno:"Sí,No" }}</td>
+                <td>{{ r.observaciones }}</td>
+                <td>{{ r.anio }}</td>
+                <td>
+                    <form action="{% url 'eliminar_relevamiento' r.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirm('¿Seguro que deseas eliminar este relevamiento?')">
+                            ❌ Eliminar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="13">No hay datos cargados.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Formulario nuevo relevamiento -->
+
+<a href="{% url 'relevamiento_nuevo' jardin.id %}" class="btn">➕ Agregar Relevamiento</a>
+
+ <a href="{% url 'escuelas' %}">Volver</a>
+
+</body>
+</html>

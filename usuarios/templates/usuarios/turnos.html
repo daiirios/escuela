@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Turnos</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+        .jardin-boton {
+            display: inline-block;
+            width: 200px;
+            height: 100px;
+            margin: 10px;
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            line-height: 100px;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+        .jardin-boton:hover { background-color: #1e7e34; }
+    </style>
+</head>
+<body>
+    <h2>Seleccione un Jardín para ver Turnos</h2>
+ <ul>
+    {% for jardin in jardines %}
+        <li>
+            <a href="{% url 'turnos_lista' jardin.id %}">{{ jardin.nombre }}</a>
+        </li>
+    {% endfor %}
+ </ul>
+
+
+    <br><br>
+    <a href="{% url 'inicio' %}">⬅️ Volver</a>
+</body>
+</html>
+

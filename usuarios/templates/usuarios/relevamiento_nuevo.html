@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nuevo Relevamiento - {{ jardin.nombre }}</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background-color: #f4f4f4; }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover { background: #218838; }
+    </style>
+</head>
+<body>
+    <h2>Nuevo Relevamiento - {{ jardin.nombre }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar</button>
+    </form>
+    <br>
+    <a href="{% 'escuelas' jardin.id %}">Volver</a>
+</body>
+</html>

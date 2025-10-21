@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ jardin.nombre }}</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background-color: #f4f4f4; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #333; padding: 8px; text-align: left; }
+        th { background-color: #007BFF; color: white; }
+    </style>
+</head>
+<body>
+  <h2>Jardín ENI {{ jardin.numero }}</h2>
+
+<a href="{% url 'estudiante_nuevo' jardin.id %}" class="btn">
+  ➕ Agregar estudiante
+</a>
+
+<table border="1">
+  <thead style="background-color: dodgerblue; color: white;">
+    <tr>
+      
+      <th>Sala</th>
+      <th>Turno</th>
+      <th>Docente</th>
+      <th>Nombre</th>
+      <th>DNI</th>
+      <th>Obra Social</th>
+      <th>Control Oftam.</th>
+      <th>Observaciones</th>
+      <th>Año</th>
+      <th>Acciones</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {% for estudiante in estudiantes %}
+      <tr>
+        <td>{{ estudiante.sala }}</td>
+        <td>{{ estudiante.turno }}</td>
+        <td>{{ estudiante.docente }}</td>
+        <td>{{ estudiante.nombre }}</td>
+        <td>{{ estudiante.dni }}</td>
+        <td>{{ estudiante.obra_social }}</td>
+        <td>{{ estudiante.control_oftam }}</td>
+        <td>{{ estudiante.observaciones }}</td>
+        <td>{{ estudiante.anio }}</td>
+        <td>
+          <form action="{% url 'eliminar_estudiante' estudiante.id %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" onclick="return confirm('¿Seguro que deseas eliminar este estudiante?')">
+              ❌ Eliminar
+            </button>
+          </form>
+        </td>
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="9">No hay estudiantes cargados.</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{% url 'escuelas' %}">Volver</a>
+</body>
+</html>
+

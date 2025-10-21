@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Turnos - {{ jardin.nombre }}</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background-color: #f4f4f4; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #333; padding: 8px; text-align: center; }
+        th { background-color: #007BFF; color: white; }
+        .btn {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 8px 12px;
+            background: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .btn:hover { background: #0056b3; }
+        button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover { background: #a71d2a; }
+    </style>
+</head>
+<body>
+    <h2>Turnos - {{ jardin.nombre }}</h2>
+
+    <!-- Botón para volver -->
+    <a href="{% url 'inicio' %}" class="btn">⬅️ Volver</a>
+
+    <!-- Tabla de turnos -->
+    <table>
+        <thead>
+            <tr>
+                <th>Jardin</th>
+                <th>Apellido y Nombre</th>
+                <th>DNI</th>
+                <th>Turno</th>
+                <th>Grado/División</th>
+                <th>Fecha de turno</th>
+                <th>Centro de salud prof.</th>
+                <th>Observaciones</th>
+                <th>Año</th>
+                <th>Acciones</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in turnos %}
+            <tr>
+                <td>{{ t.jardin }}</td>
+                <td>{{ t.apellido_nombre }}</td>
+                <td>{{ t.dni }}</td>
+                <td>{{ t.turno }}</td>
+                <td>{{ t.grado_division }}</td>
+                <td>{{ t.fecha_turno }}</td>
+                <td>{{ t.centro_salud_prof }}</td>
+                <td>{{ t.observaciones }}</td>
+                <td>{{ t.anio }}</td>
+                    <form action="{% url 'eliminar_turno' t.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirm('¿Seguro que deseas eliminar este turno?')">❌ Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="9">No hay turnos cargados.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Botón para crear un nuevo turno -->
+    <a href="{% url 'turno_nuevo' jardin.id %}" class="btn">➕ Agregar Turno</a>
+</body>
+</html>

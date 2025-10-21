@@ -1,0 +1,18 @@
+
+
+
+
+
+
+
+
+
+<h2>Nuevo estudiante en {{ jardin.nombre }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+</form>
+
+<a href="{% url 'jardin_detalle' jardin.id %}">Volver</a>

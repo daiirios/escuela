@@ -1,0 +1,30 @@
+<h2>Seleccione un Jardín para ver relevamiento</h2>
+
+<style>
+        body { font-family: Arial; padding: 20px; background-color: #f4f4f4; }
+        .jardin-boton {
+            display: inline-block;
+            width: 200px;
+            height: 100px;
+            margin: 10px;
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            line-height: 100px;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+        .jardin-boton:hover { background-color: #1e7e34; }
+    </style>
+
+{% for jardin in jardines %}
+    <a class="jardin-boton" href="{% url 'relevamiento' jardin.id %}">
+        {{ jardin.nombre }}
+    </a>
+{% endfor %}
+
+<br><br>
+<a href="{% url 'relevamiento' %}">Volver</a>
+

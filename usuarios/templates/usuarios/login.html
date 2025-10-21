@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      transition: background 0.5s, color 0.5s;
+    }
+    .card {
+      background: rgba(20, 20, 30, 0.9);
+      padding: 2rem;
+      border-radius: 1rem;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0 0 25px rgb(221, 246, 0),
+                  0 0 50px rgba(225, 248, 255, 0.2);
+      animation: fadeIn 1s ease;
+      transition: background 0.5s;
+    }
+    h1 {
+      margin-bottom: 1rem;
+      color: rgb(242, 255, 96);
+      text-shadow: 0 0 10px rgb(255, 255, 255), 0 0 20px #d4f57f;
+    }
+    label {
+      display: block;
+      margin: 0.8rem 0 0.4rem;
+      font-size: 0.9rem;
+      color: inherit;
+    }
+    input {
+      width: 100%;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 0.5rem;
+      background: #1a1a2e;
+      color: inherit;
+      outline: none;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+    input:focus {
+      box-shadow: 0 0 10px #f0f85c, 0 0 20px rgb(217, 255, 0);
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.8rem 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.3s ease, color 0.3s ease;
+    }
+    button:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+    .login-btn {
+      width: 100%;
+      color: #000;
+      background: linear-gradient(90deg, rgb(211, 246, 83), #efff5b, #e1ee2e, #d5ff03);
+    }
+    .day-night {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    .day-btn {
+      background: #ffd966;
+      color: #000;
+    }
+    .night-btn {
+      background: #3333cc;
+      color: #000;
+    }
+    .error { color: #ff4d6d; margin-top: 1rem; }
+    .success { color: #00ffb3; margin-top: 1rem; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- MODO NOCHE --- */
+    .night-mode {
+      color: yellow !important;
+    }
+    .night-mode .day-btn,
+    .night-mode .night-btn {
+      color: yellow !important;
+    }
+
+    /* --- MODO DÍA --- */
+    .day-mode input {
+      color: white !important; /* letras blancas al escribir */
+    }
+  </style>
+
+ <!-- Botones modo día/noche -->
+    <div class="day-night">
+      <button type="button" class="day-btn" onclick="setDay()">☀️ Día</button>
+      <button type="button" class="night-btn" onclick="setNight()">🌙 Noche</button>
+    </div>
+  </div>
+
+  <script>
+    const DEMO_USER = "admin";
+    const DEMO_PASS = "123456";
+    const form = document.getElementById("loginForm");
+    const msg = document.getElementById("message");
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      const u = document.getElementById("username").value;
+      const p = document.getElementById("password").value;
+      if (u === DEMO_USER && p === DEMO_PASS) {
+        msg.innerHTML = <div class="success">✔ Bienvenido ${u}!</div>;
+      } else {
+        msg.innerHTML = <div class="error">✖ Usuario o contraseña incorrectos</div>;
+      }
+    });
+
+    function setDay() {
+      document.body.style.background = "radial-gradient(circle at top, #a1c4fd, #c2e9fb, #f9f9f9)";
+      document.body.style.color = "#000";
+      document.querySelector(".card").style.background = "rgba(255, 255, 255, 0.9)";
+      document.body.classList.remove("night-mode");
+      document.body.classList.add("day-mode"); // activa modo día
+    }
+
+    function setNight() {
+      document.body.style.background = "radial-gradient(circle at top, #0f0c29, #302b63, #24243e)";
+      document.body.style.color = "yellow";
+      document.querySelector(".card").style.background = "rgba(20, 20, 30, 0.9)";
+      document.body.classList.remove("day-mode");
+      document.body.classList.add("night-mode"); // activa modo noche
+    }
+  </script>
+
+
+
+
+
+<head>
+    <title>Login</title>
+<body>
+
+    <div class="card">
+    <h2>Iniciar sesión</h2>
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label>Usuario:</label>
+        <input type="text" name="username"><br>
+        <label>Contraseña:</label>
+        <input type="password" name="password"><br>
+        <button type="submit">Ingresar</button>
+    </form>
+     </div>
+</body>
+</html>
